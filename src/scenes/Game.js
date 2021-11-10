@@ -128,11 +128,9 @@ export default class Game extends Phaser.Scene {
             window.addEventListener("deviceorientation", function (event) {
                 var x = event.beta;
                 var y = event.gamma;
-                if (x >= 90 && x <= 80) {
-                    player.setVelocityX(y);
-                    console.log("ALPHA " + event.alpha)
-                    console.log("BETA " + event.beta)
-                }
+                player.setVelocityX(y);
+                console.log("ALPHA " + event.alpha)
+                console.log("BETA " + event.beta)
                 // if (y > 10 && !touchingDown) {
                 //     player.setVelocityX(-200)
                 // } else if (y < -10 && !touchingDown) {
