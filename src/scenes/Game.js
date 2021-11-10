@@ -129,8 +129,6 @@ export default class Game extends Phaser.Scene {
                 var x = event.beta;
                 var y = event.gamma;
                 player.setVelocityX(y);
-                console.log("ALPHA " + event.alpha)
-                console.log("BETA " + event.beta)
                 // if (y > 10 && !touchingDown) {
                 //     player.setVelocityX(-200)
                 // } else if (y < -10 && !touchingDown) {
