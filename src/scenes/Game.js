@@ -69,7 +69,7 @@ export default class Game extends Phaser.Scene {
         // this.add.image(240, 320, 'background')
         this.add.image(window.innerWidth, window.innerHeight, 'background')
             .setScrollFactor(1, 0)
-            .setPosition(240,320)
+            .setPosition(240, 320)
         // this.physics.add.image(240, 320, 'platform')
         //     .setScale(0.5)
 
@@ -126,14 +126,18 @@ export default class Game extends Phaser.Scene {
         let player = this.player;
         if (typeof player !== "undefined") {
             window.addEventListener("deviceorientation", function (event) {
+                var x = event.beta;
                 var y = event.gamma;
-                player.setVelocityX(y);
+                if (x >= 90 && x <= 80) {
+                    player.setVelocityX(y);
+                    console.log("ALPHA " + event.alpha)
+                    console.log("BETA " + event.beta)
+                }
                 // if (y > 10 && !touchingDown) {
                 //     player.setVelocityX(-200)
                 // } else if (y < -10 && !touchingDown) {
                 //     player.setVelocityX(200)
                 // }
-                console.log(y)
             }, true);
 
             // window.addEventListener("devicemotion", function(event) {
