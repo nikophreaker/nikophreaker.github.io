@@ -123,6 +123,30 @@ export default class Game extends Phaser.Scene {
             this
         )
 
+        let player = this.player;
+        if (typeof player !== "undefined") {
+            window.addEventListener("deviceorientation", function (event) {
+                var y = event.gamma;
+                player.setVelocityX(y);
+                // if (y > 10 && !touchingDown) {
+                //     player.setVelocityX(-200)
+                // } else if (y < -10 && !touchingDown) {
+                //     player.setVelocityX(200)
+                // }
+                console.log(y)
+            }, true);
+
+            // window.addEventListener("devicemotion", function(event) {
+            //     var y = event.accelerationIncludingGravity.gamma;
+
+            //     if (y > 10 && !touchingDown) {
+            //         player.setVelocityX(-200)
+            //     } else if (y < -10 && !touchingDown) {
+            //         player.setVelocityX(200)
+            //     }
+            //     console.log(y)
+            // }, true);
+        }
 
         const style = {
             color: '#000',
@@ -184,31 +208,6 @@ export default class Game extends Phaser.Scene {
         const touchingDown = this.player.body.touching.down
 
         //window.addEventListener("deviceorientation", this.handleOrientation);
-
-        let player = this.player;
-        if (typeof player !== "undefined") {
-            window.addEventListener("deviceorientation", function (event) {
-                var y = event.gamma;
-                player.setVelocityX(y);
-                // if (y > 10 && !touchingDown) {
-                //     player.setVelocityX(-200)
-                // } else if (y < -10 && !touchingDown) {
-                //     player.setVelocityX(200)
-                // }
-                console.log(y)
-            }, true);
-
-            // window.addEventListener("devicemotion", function(event) {
-            //     var y = event.accelerationIncludingGravity.gamma;
-
-            //     if (y > 10 && !touchingDown) {
-            //         player.setVelocityX(-200)
-            //     } else if (y < -10 && !touchingDown) {
-            //         player.setVelocityX(200)
-            //     }
-            //     console.log(y)
-            // }, true);
-        }
 
         if (touchingDown) {
             this.player.setVelocityY(-300)
