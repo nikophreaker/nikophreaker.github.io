@@ -5,7 +5,6 @@ export default class Game extends Phaser.Scene {
 
     init() {
         this.carrotsCollected = 0
-        this.name = "name"
     }
 
     /** @type {Phaser.Physics.Arcade.StaticGroup} */
@@ -23,7 +22,7 @@ export default class Game extends Phaser.Scene {
     /**
      * @param {Phaser.Physics.Arcade.Sprite} player
      * @param {Carrot} carrot
-     */
+     **/
     handleCollectCarrot(player, carrot) {
         // hide from display
         this.carrots.killAndHide(carrot)
@@ -31,6 +30,11 @@ export default class Game extends Phaser.Scene {
         // disable from physics world
         this.physics.world.disableBody(carrot.body)
 
+        /** 3. make this.carrotsCollected increase when overlap with carrot
+         *     and score change in windows
+         *  
+         *     Your code below here
+         */
         this.carrotsCollected++
         const value = `Carrots: ${this.carrotsCollected}`
         this.carrotsCollectedText.text = value
@@ -49,12 +53,9 @@ export default class Game extends Phaser.Scene {
     }
 
     create() {
-        // this.add.image(240, 320, 'background')
         this.add.image(window.innerWidth, window.innerHeight, 'background')
             .setScrollFactor(1, 0)
             .setPosition(240, 320)
-        // this.physics.add.image(240, 320, 'platform')
-        //     .setScale(0.5)
 
         //create the group
         this.platforms = this.physics.add.staticGroup()
@@ -106,20 +107,6 @@ export default class Game extends Phaser.Scene {
             this
         )
 
-        // url (required), options (optional)
-        fetch('https://mgoalindo.com/api/user/profil', {
-            method: 'get'
-        }).then(function(response) {
-            this.name = `name`
-            const value = `Name: ${this.name}` 
-            this.nameText.text = value
-        }).catch(function(err) {
-            this.name = `name`
-            const value = `Name: ${this.name}` 
-            this.nameText.text = value
-        // Error :(
-        });
-
         let player = this.player;
         if (typeof player !== "undefined") {
             window.addEventListener("deviceorientation", function (event) {
@@ -137,9 +124,32 @@ export default class Game extends Phaser.Scene {
             .setScrollFactor(0)
             .setOrigin(0.5, 0)
 
+        this.setNameText()
+
+        /** 1. add object text below score like Name: -
+         *  Your answer below here
+         * */ 
         this.nameText = this.add.text(window.innerWidth / 2, 30, 'Name: -', style)
             .setScrollFactor(0)
             .setOrigin(0.5, 0)
+    }
+
+    setNameText(){
+        /** 2. Make function to fetch api from https://my-json-server.typicode.com/typicode/demo/db
+         *      and set text of nameText with response profile name
+         * Your answer below here
+         * */ 
+        fetch('https://my-json-server.typicode.com/typicode/demo/db', {
+            method: 'get',
+            headers: {'Content-Type': 'application/json'}
+        }).then( res => {
+            res.json().then( res2 => {
+                const value = `Name: ${res2.profile.name}` 
+                this.nameText.text = value
+            })
+        }).catch( err => {
+            console.log(err)
+        });
     }
 
     update(t, dt) {
