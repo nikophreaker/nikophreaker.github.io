@@ -1,6 +1,5 @@
 import Phaser from "../lib/phaser.js";
 import Carrot from "../game/Carrot.js";
-import GyroNorm from "../lib/gyronorm.js";
 
 export default class Game extends Phaser.Scene {
 
@@ -36,22 +35,6 @@ export default class Game extends Phaser.Scene {
         const value = `Carrots: ${this.carrotsCollected}`
         this.carrotsCollectedText.text = value
     }
-
-    // handleOrientation(event) {
-    //     var x = event.beta; // In degree in the range [-180,180)
-    //     var y = event.gamma; // In degree in the range [-90,90)
-
-    //     //   output.textContent  = `beta : ${x}\n`;
-    //     // const value = `Delta: ${this.delta}`
-    //     // this.deltaText.text = value
-    //     if (y > 0) {
-    //         player.setVelocityX(-200);
-    //     } else if (y < 0) {
-
-    //     }
-    //     console.log(y);
-    // }
-
 
     constructor() {
         super("game")
@@ -129,23 +112,7 @@ export default class Game extends Phaser.Scene {
                 var x = event.beta;
                 var y = event.gamma;
                 player.setVelocityX(y);
-                // if (y > 10 && !touchingDown) {
-                //     player.setVelocityX(-200)
-                // } else if (y < -10 && !touchingDown) {
-                //     player.setVelocityX(200)
-                // }
             }, true);
-
-            // window.addEventListener("devicemotion", function(event) {
-            //     var y = event.accelerationIncludingGravity.gamma;
-
-            //     if (y > 10 && !touchingDown) {
-            //         player.setVelocityX(-200)
-            //     } else if (y < -10 && !touchingDown) {
-            //         player.setVelocityX(200)
-            //     }
-            //     console.log(y)
-            // }, true);
         }
 
         const style = {
@@ -185,29 +152,7 @@ export default class Game extends Phaser.Scene {
             }
         });
 
-        // var gn = new GyroNorm();
-        // gn.init().then(function () {
-        //     gn.start(function (data) {
-        //         //Process:
-        //         if (touchingDown) {
-        //             this.player.setVelocityY(-300)
-        //             this.player.setTexture('bunny-jump')
-        //         } else if (data.dm.gx < 0 && !touchingDown) {
-        //             player.setVelocityX(-200)
-        //         } else if (data.dm.gx > 0 && !touchingDown) {
-        //             player.setVelocityX(200)
-        //         } else {
-        //             player.setVelocityX(0)
-        //         }
-        //         console.log("Success");
-        //     })
-        // }).catch(function (e) {
-        //     console.log(e);
-        // });
-
         const touchingDown = this.player.body.touching.down
-
-        //window.addEventListener("deviceorientation", this.handleOrientation);
 
         if (touchingDown) {
             this.player.setVelocityY(-300)

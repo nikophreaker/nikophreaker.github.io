@@ -1,7 +1,6 @@
 import Phaser from "./lib/phaser.js";
 import Game from "./scenes/Game.js";
 import GameOver from "./scenes/GameOver.js";
-import { banana } from "./banana.js";
 
 console.dir(Phaser);
 
