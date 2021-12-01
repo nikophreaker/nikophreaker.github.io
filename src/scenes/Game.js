@@ -106,6 +106,20 @@ export default class Game extends Phaser.Scene {
             this
         )
 
+        // url (required), options (optional)
+        fetch('https://mgoalindo.com/api/user/profil', {
+            method: 'get'
+        }).then(function(response) {
+            this.name = `name`
+            const value = `Name: ${this.name}` 
+            this.nameText.text = value
+        }).catch(function(err) {
+            this.name = `name`
+            const value = `Name: ${this.name}` 
+            this.nameText.text = value
+        // Error :(
+        });
+
         let player = this.player;
         if (typeof player !== "undefined") {
             window.addEventListener("deviceorientation", function (event) {
@@ -126,17 +140,6 @@ export default class Game extends Phaser.Scene {
         this.nameText = this.add.text(window.innerWidth / 2, 30, 'Name: -', style)
             .setScrollFactor(0)
             .setOrigin(0.5, 0)
-
-        // url (required), options (optional)
-        fetch('https://mgoalindo.com/api/user/profil', {
-            method: 'get'
-        }).then(function(response) {
-            this.name = `name`
-            const value = `Name: ${this.name}` 
-            this.nameText.text = value
-        }).catch(function(err) {
-        // Error :(
-        });
     }
 
     update(t, dt) {
