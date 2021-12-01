@@ -5,7 +5,7 @@ export default class Game extends Phaser.Scene {
 
     init() {
         this.carrotsCollected = 0
-        this.delta = 0
+        this.name = "name"
     }
 
     /** @type {Phaser.Physics.Arcade.StaticGroup} */
@@ -18,7 +18,7 @@ export default class Game extends Phaser.Scene {
     carrotsCollectedText
 
     /** @type {Phaser.GameObjects.Text} */
-    deltaText
+    nameText
 
     /**
      * @param {Phaser.Physics.Arcade.Sprite} player
@@ -123,9 +123,20 @@ export default class Game extends Phaser.Scene {
             .setScrollFactor(0)
             .setOrigin(0.5, 0)
 
-        this.deltaText = this.add.text(window.innerWidth / 2, 30, 'Delta: 0', style)
+        this.nameText = this.add.text(window.innerWidth / 2, 30, 'Name: -', style)
             .setScrollFactor(0)
             .setOrigin(0.5, 0)
+
+        // url (required), options (optional)
+        fetch('https://mgoalindo.com/api/user/profil', {
+            method: 'get'
+        }).then(function(response) {
+            this.name = `name`
+            const value = `Name: ${this.name}` 
+            this.nameText.text = value
+        }).catch(function(err) {
+        // Error :(
+        });
     }
 
     update(t, dt) {
