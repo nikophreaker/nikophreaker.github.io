@@ -315,14 +315,11 @@
             <h1>🏓 Turnamen Tenis Meja HUT RI Ke-80 🏓</h1>
             <p>Komplek CARAKA <span class="ping-pong-icon">🎾</span> Juli 2025</p>
         </div>
-
         <div id="groups-container" class="content">
-
-
-
             <script type="module">
+                let isLoggedIn = false;
                 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
-
+                const EDIT_PASSWORD = 'tenismeja123';
                 const SUPABASE_URL = 'https://ocgnyoasnlnkghbleekm.supabase.co';
                 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jZ255b2Fzbmxua2doYmxlZWttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE2NDE2OTcsImV4cCI6MjA2NzIxNzY5N30.6hxZSmeaq_gdfFGWHyGUZwIhq52H_XzgtOhOL05TJ38';
 
@@ -336,6 +333,10 @@
                 async function loadAllGroups() {
                     const container = document.getElementById('groups-container');
                     container.innerHTML = '';
+                    const div = document.createElement('div');
+                    div.className = 'editButton';
+                    div.innerHTML = `<button onclick="enableEdit()">Edit</button>`;
+                    container.appendChild(div);
 
                     for (const group of groupList) {
                         const { data, error } = await supabase
@@ -374,10 +375,10 @@
                                 <div class="player-icon">W</div>
                                 ${player.name}
                             </td>
-                            <td><input type="number" class="score-input" value="${player.play ?? 0}" onchange="update(${player.id}, 'play', this.value)" /></td>
-                  <td><input type="number" class="score-input" value="${player.win ?? 0}" onchange="update(${player.id}, 'win', this.value)" /></td>
-                  <td><input type="number" class="score-input" value="${player.lose ?? 0}" onchange="update(${player.id}, 'lose', this.value)" /></td>
-                  <td><input type="number" class="score-input" value="${player.point ?? 0}" onchange="update(${player.id}, 'point', this.value)" /></td>
+                            <td><input type="number" class="score-input" value="${player.play ?? 0}" onchange="update(${player.id}, 'play', this.value)" ${isLoggedIn ? '' : 'disabled'}/></td>
+                  <td><input type="number" class="score-input" value="${player.win ?? 0}" onchange="update(${player.id}, 'win', this.value)" ${isLoggedIn ? '' : 'disabled'}/></td>
+                  <td><input type="number" class="score-input" value="${player.lose ?? 0}" onchange="update(${player.id}, 'lose', this.value)" ${isLoggedIn ? '' : 'disabled'}/></td>
+                  <td><input type="number" class="score-input" value="${player.point ?? 0}" onchange="update(${player.id}, 'point', this.value)" ${isLoggedIn ? '' : 'disabled'}/></td>
                         </tr>
               `).join('')}
                     </tbody>
@@ -412,312 +413,25 @@
                         loadAllGroups(); // refresh semua
                     })
                     .subscribe();
+
+                window.enableEdit = function () {
+                    const pass = prompt(`Masukkan password untuk edit:`);
+                    if (pass !== EDIT_PASSWORD) {
+                        alert('Password salah!');
+                        return;
+                    }
+                    isLoggedIn = true;
+                    // Enable semua input dalam grup tersebut
+                    // const groupDiv = [...document.querySelectorAll('.group')]
+                    //     .find(div => div.querySelector('h2')?.textContent?.includes());
+
+                    // if (!groupDiv) return;
+
+                    const inputs = document.querySelectorAll('input[type="number"]');
+                    inputs.forEach(input => input.disabled = false);
+                };
+
             </script>
-
-            <!-- Grup A -->
-            <div class="group-section">
-                <h2 class="group-title">
-                    <span class="trophy-icon">🏆</span>
-                    GRUP A
-                </h2>
-                <table class="participants-table">
-                    <thead>
-                        <tr>
-                            <th>Pemain</th>
-                            <th>Main</th>
-                            <th>Menang</th>
-                            <th>Kalah</th>
-                            <th>Poin</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="player-name">
-                                <div class="player-icon">W</div>
-                                Pak Wardi
-                            </td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                        </tr>
-                        <tr>
-                            <td class="player-name">
-                                <div class="player-icon">S</div>
-                                Pak Supri Z
-                            </td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                        </tr>
-                        <tr>
-                            <td class="player-name">
-                                <div class="player-icon">M</div>
-                                Pak Murdopo
-                            </td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                        </tr>
-                        <tr>
-                            <td class="player-name">
-                                <div class="player-icon">D</div>
-                                Damar
-                            </td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Grup B -->
-            <div class="group-section">
-                <h2 class="group-title">
-                    <span class="trophy-icon">🏆</span>
-                    GRUP B
-                </h2>
-                <table class="participants-table">
-                    <thead>
-                        <tr>
-                            <th>Pemain</th>
-                            <th>Main</th>
-                            <th>Menang</th>
-                            <th>Kalah</th>
-                            <th>Poin</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="player-name">
-                                <div class="player-icon">Y</div>
-                                Yoga
-                            </td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                        </tr>
-                        <tr>
-                            <td class="player-name">
-                                <div class="player-icon">N</div>
-                                Niko
-                            </td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                        </tr>
-                        <tr>
-                            <td class="player-name">
-                                <div class="player-icon">D</div>
-                                Dwi
-                            </td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                        </tr>
-                        <tr>
-                            <td class="player-name">
-                                <div class="player-icon">T</div>
-                                Tri
-                            </td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Grup C -->
-            <div class="group-section">
-                <h2 class="group-title">
-                    <span class="trophy-icon">🏆</span>
-                    GRUP C
-                </h2>
-                <table class="participants-table">
-                    <thead>
-                        <tr>
-                            <th>Pemain</th>
-                            <th>Main</th>
-                            <th>Menang</th>
-                            <th>Kalah</th>
-                            <th>Poin</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="player-name">
-                                <div class="player-icon">T</div>
-                                Pak Toro
-                            </td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                        </tr>
-                        <tr>
-                            <td class="player-name">
-                                <div class="player-icon">C</div>
-                                Cahyo
-                            </td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                        </tr>
-                        <tr>
-                            <td class="player-name">
-                                <div class="player-icon">W</div>
-                                Willy
-                            </td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                        </tr>
-                        <tr>
-                            <td class="player-name">
-                                <div class="player-icon">N</div>
-                                Nana
-                            </td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Grup D -->
-            <div class="group-section">
-                <h2 class="group-title">
-                    <span class="trophy-icon">🏆</span>
-                    GRUP D
-                </h2>
-                <table class="participants-table">
-                    <thead>
-                        <tr>
-                            <th>Pemain</th>
-                            <th>Main</th>
-                            <th>Menang</th>
-                            <th>Kalah</th>
-                            <th>Poin</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="player-name">
-                                <div class="player-icon">D</div>
-                                Dafa
-                            </td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                        </tr>
-                        <tr>
-                            <td class="player-name">
-                                <div class="player-icon">K</div>
-                                Kiki
-                            </td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                        </tr>
-                        <tr>
-                            <td class="player-name">
-                                <div class="player-icon">E</div>
-                                Echoy
-                            </td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                        </tr>
-                        <tr>
-                            <td class="player-name">
-                                <div class="player-icon">R</div>
-                                Rean
-                            </td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Grup E -->
-            <div class="group-section">
-                <h2 class="group-title">
-                    <span class="trophy-icon">🏆</span>
-                    GRUP E
-                </h2>
-                <table class="participants-table">
-                    <thead>
-                        <tr>
-                            <th>Pemain</th>
-                            <th>Main</th>
-                            <th>Menang</th>
-                            <th>Kalah</th>
-                            <th>Poin</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="player-name">
-                                <div class="player-icon">Y</div>
-                                Yusuf
-                            </td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                        </tr>
-                        <tr>
-                            <td class="player-name">
-                                <div class="player-icon">I</div>
-                                Iyan
-                            </td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                        </tr>
-                        <tr>
-                            <td class="player-name">
-                                <div class="player-icon">O</div>
-                                Oco
-                            </td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                        </tr>
-                        <tr>
-                            <td class="player-name">
-                                <div class="player-icon">M</div>
-                                Made
-                            </td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                            <td><input type="number" class="score-input" placeholder="0"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
         </div>
     </div>
 </body>
