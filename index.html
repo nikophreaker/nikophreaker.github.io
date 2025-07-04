@@ -342,7 +342,7 @@
                             .from('user_group')
                             .select('*')
                             .eq('group', group)
-                            .order('id');
+                            .order('point', { ascending: false });
 
                         if (error) {
                             console.error(`Error fetching group ${group}:`, error);
