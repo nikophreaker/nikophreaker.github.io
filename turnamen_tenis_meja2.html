@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turnamen Tenis Meja HUT RI Ke-80</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateX(-50px) translateY(-50px);
+            }
+
+            100% {
+                transform: translateX(50px) translateY(50px);
+            }
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            position: relative;
+            z-index: 1;
+            opacity: 0.9;
+        }
+
+        .ping-pong-icon {
+            display: inline-block;
+            margin: 0 10px;
+            font-size: 1.5em;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-10px);
+            }
+
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .group-section {
+            margin-bottom: 40px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 5px solid #ff6b6b;
+        }
+
+        .group-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #ff6b6b;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .trophy-icon {
+            font-size: 1.2em;
+            color: #ffd700;
+        }
+
+        .participants-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .participants-table th {
+            background: linear-gradient(135deg, #4834d4 0%, #686de0 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .participants-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e9ecef;
+            position: relative;
+        }
+
+        .participants-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .participants-table tr:hover {
+            background: #e3f2fd;
+            transform: translateX(5px);
+            transition: all 0.3s ease;
+        }
+
+        .player-name {
+            font-weight: 600;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .player-icon {
+            width: 25px;
+            height: 25px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.8em;
+        }
+
+        .score-input {
+            width: 60px;
+            padding: 8px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .score-input:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+        }
+
+        .matches-section {
+            margin-top: 40px;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 15px;
+            padding: 25px;
+        }
+
+        .matches-title {
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #2c3e50;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .calendar-icon {
+            font-size: 1.2em;
+            color: #ff6b6b;
+        }
+
+        .date-group {
+            margin-bottom: 30px;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .date-header {
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #4834d4;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .match-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .match-item:last-child {
+            border-bottom: none;
+        }
+
+        .match-time {
+            font-weight: 600;
+            color: #ff6b6b;
+            min-width: 120px;
+        }
+
+        .match-players {
+            flex: 1;
+            margin: 0 15px;
+            font-weight: 500;
+        }
+
+        .match-group {
+            background: #4834d4;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .vs {
+            color: #ff6b6b;
+            font-weight: 700;
+            margin: 0 8px;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+
+            .header {
+                break-inside: avoid;
+            }
+
+            .group-section {
+                break-inside: avoid;
+                margin-bottom: 20px;
+            }
+
+            .participants-table tr {
+                break-inside: avoid;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .header p {
+                font-size: 1em;
+            }
+
+            .group-title {
+                font-size: 1.2em;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .participants-table th,
+            .participants-table td {
+                font-size: 0.9em;
+                padding: 10px;
+            }
+
+            .score-input {
+                width: 50px;
+                padding: 6px;
+                font-size: 0.9em;
+            }
+
+            .match-time {
+                min-width: 90px;
+                font-size: 0.9em;
+            }
+
+            .match-players {
+                margin: 0 10px;
+                font-size: 0.9em;
+            }
+
+            .matches-title {
+                font-size: 1.3em;
+                gap: 8px;
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            .header {
+                padding: 20px 10px;
+            }
+
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .header p {
+                font-size: 0.9em;
+            }
+
+            .participants-table {
+                display: block;
+                overflow-x: auto;
+                width: 100%;
+            }
+
+            .group-section {
+                padding: 15px;
+            }
+
+            .date-header,
+            .match-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .match-time,
+            .match-players,
+            .match-group {
+                margin-bottom: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏓 Turnamen Tenis Meja HUT RI Ke-80 🏓</h1>
+            <p>Komplek CARAKA <span class="ping-pong-icon">🎾</span> Juli 2025</p>
+        </div>
+        <div id="groups-container" class="content">
+            <script type="module">
+                let isLoggedIn = false;
+                import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+                const EDIT_PASSWORD = 'tenismeja123';
+                const SUPABASE_URL = 'https://ocgnyoasnlnkghbleekm.supabase.co';
+                const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jZ255b2Fzbmxua2doYmxlZWttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE2NDE2OTcsImV4cCI6MjA2NzIxNzY5N30.6hxZSmeaq_gdfFGWHyGUZwIhq52H_XzgtOhOL05TJ38';
+
+
+                const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+                const { data, error } = await supabase.from('user_group').select('*');
+                console.log(data);
+                const groupList = ['A', 'B', 'C', 'D', 'E'];
+
+                async function loadAllGroups() {
+                    const container = document.getElementById('groups-container');
+                    container.innerHTML = '';
+                    const div = document.createElement('div');
+                    div.className = 'editButton';
+                    div.innerHTML = `<button onclick="enableEdit()">Edit</button>`;
+                    container.appendChild(div);
+
+                    for (const group of groupList) {
+                        const { data, error } = await supabase
+                            .from('user_group')
+                            .select('*')
+                            .eq('group', group)
+                            .order('point', { ascending: false });
+
+                        if (error) {
+                            console.error(`Error fetching group ${group}:`, error);
+                            continue;
+                        }
+
+                        const div = document.createElement('div');
+                        div.className = 'group';
+                        div.innerHTML = `
+                        <div class="group-section">
+                <h2 class="group-title">
+                    <span class="trophy-icon">🏆</span>
+                    GRUP ${group}
+                </h2>
+                <table class="participants-table">
+                    <thead>
+                        <tr>
+                            <th>Pemain</th>
+                            <th>Main</th>
+                            <th>Menang</th>
+                            <th>Kalah</th>
+                            <th>Poin</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${data.map(player => `
+                        <tr>
+                            <td class="player-name">
+                                <div class="player-icon">W</div>
+                                ${player.name}
+                            </td>
+                            <td><input type="number" class="score-input" value="${player.play ?? 0}" onchange="update(${player.id}, 'play', this.value)" ${isLoggedIn ? '' : 'disabled'}/></td>
+                  <td><input type="number" class="score-input" value="${player.win ?? 0}" onchange="update(${player.id}, 'win', this.value)" ${isLoggedIn ? '' : 'disabled'}/></td>
+                  <td><input type="number" class="score-input" value="${player.lose ?? 0}" onchange="update(${player.id}, 'lose', this.value)" ${isLoggedIn ? '' : 'disabled'}/></td>
+                  <td><input type="number" class="score-input" value="${player.point ?? 0}" onchange="update(${player.id}, 'point', this.value)" ${isLoggedIn ? '' : 'disabled'}/></td>
+                        </tr>
+              `).join('')}
+                    </tbody>
+                </table>
+            </div>`;
+                        container.appendChild(div);
+                    }
+                }
+
+                async function update(id, field, value) {
+                    const { error } = await supabase
+                        .from('user_group')
+                        .update({ [field]: parseInt(value) })
+                        .eq('id', id);
+
+                    if (error) {
+                        console.error(`Gagal update ${field}:`, error);
+                        alert('Gagal update data!');
+                    }
+                }
+
+                // FIX: expose ke global
+                window.update = update;
+
+                loadAllGroups();
+
+                // Realtime listener
+                supabase
+                    .channel('user_group_realtime')
+                    .on('postgres_changes', { event: '*', schema: 'public', table: 'user_group' }, payload => {
+                        console.log('Data berubah:', payload);
+                        loadAllGroups(); // refresh semua
+                    })
+                    .subscribe();
+
+                window.enableEdit = function () {
+                    const pass = prompt(`Masukkan password untuk edit:`);
+                    if (pass !== EDIT_PASSWORD) {
+                        alert('Password salah!');
+                        return;
+                    }
+                    isLoggedIn = true;
+                    // Enable semua input dalam grup tersebut
+                    // const groupDiv = [...document.querySelectorAll('.group')]
+                    //     .find(div => div.querySelector('h2')?.textContent?.includes());
+
+                    // if (!groupDiv) return;
+
+                    const inputs = document.querySelectorAll('input[type="number"]');
+                    inputs.forEach(input => input.disabled = false);
+                };
+
+            </script>
+        </div>
+    </div>
+</body>
